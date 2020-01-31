@@ -55,43 +55,51 @@ export default function Weather(){
   }
   makeForcastWeeks = (forecastArray) => {
     const masterForecastArray = [
-      {title: "Monday", data:{} },
-      {title: "Tuesday", data:{} },
-      {title: "Wednesday", data:{} },
-      {title: "Thursday", data:{} },
-      {title: "Friday", data:{} },
-      {title: "Staurday", data:{} },
-      {title: "Sunday", data:{} }
+      {title: "Monday", data:[] },
+      {title: "Tuesday", data:[] },
+      {title: "Wednesday", data:[] },
+      {title: "Thursday", data:[] },
+      {title: "Friday", data:[] },
+      {title: "Staurday", data:[] },
+      {title: "Sunday", data:[] }
     ]
     forecastArray.map((ele,i) => {
-      debugger
+      // debugger
       switch (ele.title.getDay()) {
         case 1: // Monday
-          masterForecastArray[0]["data"] = Object.assign(masterForecastArray[0]["data"], ele.title, ele.data)
+          // masterForecastArray[0]["data"] = Object.assign(masterForecastArray[0]["data"], ele.title, ele.data)
+          masterForecastArray[0]["data"].push([ele.title, ele.data])
           break;
         
         case 2: // Tuesday
-          masterForecastArray[1]["data"] = Object.assign(masterForecastArray[1]["data"], ele.title, ele.data)
+          // masterForecastArray[1]["data"] = Object.assign(masterForecastArray[1]["data"], ele.title, ele.data)
+          masterForecastArray[1]["data"].push([ele.title, ele.data])
           break;
 
         case 3: // Wednesday
-          masterForecastArray[2]["data"] = Object.assign(masterForecastArray[2]["data"], ele.title, ele.data)
+          // masterForecastArray[2]["data"] = Object.assign(masterForecastArray[2]["data"], ele.title, ele.data)
+          masterForecastArray[2]["data"].push([ele.title, ele.data])
           break;
           
         case 4: // Thursday
-          masterForecastArray[3]["data"] = Object.assign(masterForecastArray[3]["data"], ele.title, ele.data)
+          // masterForecastArray[3]["data"] = Object.assign(masterForecastArray[3]["data"], ele.title, ele.data)
+          masterForecastArray[3]["data"].push([ele.title, ele.data])
           break;
           
         case 5: // Friday
-          masterForecastArray[4]["data"] = Object.assign(masterForecastArray[4]["data"], ele.title, ele.data)
+          // masterForecastArray[4]["data"] = Object.assign(masterForecastArray[4]["data"], ele.title, ele.data)
+          masterForecastArray[4]["data"].push([ele.title, ele.data])
           break;
           
         case 6: // Staurday
-          masterForecastArray[5]["data"] = Object.assign(masterForecastArray[5]["data"], ele.title, ele.data)
+          // masterForecastArray[5]["data"] = Object.assign(masterForecastArray[5]["data"], ele.title, ele.data)
+          masterForecastArray[5]["data"].push([ele.title, ele.data])
+          // Object.assign(masterForecastArray[5]["data"], {title: ele.title}, {data: ele.data})
           break;
 
         case 7: // Sunday
-          masterForecastArray[6]["data"] = Object.assign(masterForecastArray[6]["data"], ele.title, ele.data)
+          // masterForecastArray[6]["data"] = Object.assign(masterForecastArray[6]["data"], ele.title, ele.data)
+          masterForecastArray[6]["data"].push([ele.title, ele.data])
           break;
       
         default:
@@ -112,7 +120,12 @@ export default function Weather(){
       {forecast && (
         <SectionList
           sections={forecast}
-          renderItem={(data) =><Text style={styles.item}>{kelvinToF(data.section.data[0].temp)}</Text>}
+          renderItem={({item}) =><View style={styles.item}>
+                                    <Text>{item[0].toLocaleString()}</Text>
+                                    <Text>{kelvinToF(item[1][0].temp)}</Text>
+                                  </View>
+                                  }
+          renderSectionHeader={({section: {title} }) =>(<Text style={styles.header}>{title}</Text>) }
           keyExtractor={(data, index) => index}
           // renderSectionHeader={<Text style={styles.header}>1</Text>}
           />
