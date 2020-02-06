@@ -7,6 +7,8 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 
 import Weather from '../screens/weather';
+import WeatherFlat from '../screens/weatherFlat';
+import WeatherSection from "../screens/weatherSection"
 import Time from '../screens/time';
 
 export default createAppContainer(
@@ -17,6 +19,17 @@ export default createAppContainer(
         navigationOptions: ({ navigation }) => ({
           title: 'Weather',
       })},
+        // WeatherFlatRt: { 
+        //   screen: WeatherFlat, 
+        //   navigationOptions: ({ navigation }) => ({
+        //     title: 'WeatherFlat',
+        // })},
+        WeatherSecRt: { 
+          screen: WeatherSection, 
+          navigationOptions: ({ navigation }) => ({
+            title: 'Weather Section',
+        }),
+      },
       TimeRT: {
         screen: Time,
         navigationOptions: ({ navigation }) => ({

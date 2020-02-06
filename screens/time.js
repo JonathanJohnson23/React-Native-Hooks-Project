@@ -8,8 +8,9 @@ export default function Time(){
   return (
     <View>
       <Text>HELLO FROM TIME</Text>
+      {/* <Text>HELLO FROM TIME</Text>
       <Text>HELLO FROM TIME</Text>
-      <Text>HELLO FROM TIME</Text>
+      <Text>HELLO FROM TIME</Text> */}
     </View>
   )
 }
