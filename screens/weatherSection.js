@@ -21,7 +21,8 @@ export default function WeatherSection(props){
   const [scrollViewHandle, setScrollViewHandle] = useState(null);
   const [domDone, setDomDone] = useState(false);
   const [activeDayTouchable, setActiveDayTouchable] = useState(0);
-  const [userInputLocation, setUserInputLocation] = useState(null)
+  const [userInputLocation, setUserInputLocation] = useState(null);
+  const [typingCounter, setTypingCounter] = useState(1);
   // debugger
   // Weather.navigationOptions = {
   //   tabBarLabel: 'Weather',
@@ -33,17 +34,20 @@ export default function WeatherSection(props){
   const fetchWeatherData = async (location = "Eagan, us") => {
     const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${location}&APPID=e8087fe318dd4e29fd194e7fb42a9570`)
     // const response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${Math.floor(location.coords.latitude)}&lon=${Math.floor(location.coords.longitude)}&APPID=4288a66cb96ad4d3e80e2942b693c2e8`)
-    const forecast = await response.json()
-
+    const weatherResponse = await response.json()
+    if(!response.ok) {
+      return forecast
+    }else { 
+      console.log("RESPONSE:",weatherResponse)
+      return weatherResponse
+    };
     // if(location){
     //   const response2 = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.coords.latitude},${location.coords.longitude}&key=AIzaSyA1oe2CqYKqOEsMg8RyW6SMTN2GCcHpecU`)
     //   const forecast2 = await response2.json()
     //   console.log("RESPONSE:",forecast2)
     // }
-    console.log("RESPONSE:",forecast)
 
     // debugger
-    return forecast
   }
 
   useEffect(() => {
@@ -155,6 +159,8 @@ export default function WeatherSection(props){
   // })
   // console.log("Forecast:", forecast)
   console.log("data", data)
+  console.log("Typing counter", typingCounter)
+  console.log("User Input Location", userInputLocation)
     setDayIndex(data.index - 1)
   }
 
@@ -185,6 +191,13 @@ export default function WeatherSection(props){
     }
     return returnArray
   } 
+  locationInput = (text) => {
+    setTypingCounter(typingCounter + 1)
+    if(typingCounter % 3 === 0){ 
+      if(text.length >=3 )setUserInputLocation(text)
+      setTypingCounter(1)
+    }
+  }
   // debugger
   return (
     <View style={styles.container}>
@@ -192,8 +205,8 @@ export default function WeatherSection(props){
 
            <TextInput
               style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={text => setUserInputLocation(text)}
-              value={userInputLocation}
+              onChangeText={text => locationInput(text)}
+              // value={userInputLocation}
             />
 
       )}
